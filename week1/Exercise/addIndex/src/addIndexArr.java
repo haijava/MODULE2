@@ -16,18 +16,15 @@ public class addIndexArr {
         System.out.println();
     }
     public static void addIndex(int[]arr,int k,int index,int n) {
-
-        if (index < 0 && index >= n - 1) {
-            System.out.println("khong add dc");
-
-        } else {
-            int j ;
-            for (j = arr.length-2; j > index; j--) {
-                arr[j + 1] = arr[j];
-            }
-            arr[index] = k;
+        int[]array =new int[n+1];
+        for (int i = 0; i<index; i++){
+            array[i]= arr[i];
         }
-        System.out.println(Arrays.toString(arr));
+        array[index]=k;
+        for (int i= index+1;i<n+1;i++){
+            array[i]=arr[i-1];
+        }
+        System.out.println(Arrays.toString(array));
     }
     public static void main(String[] args) {
         System.out.println("input number element");
@@ -36,10 +33,16 @@ public class addIndexArr {
         int[] arr = new int[n];
         createArr(arr,n);
         showArr(arr,n);
-        System.out.println("nhap gia tri can chen");
+        System.out.println("input values added");
         int k =sc.nextInt();
-        System.out.println("nhaapj vij tri can chen");
+        System.out.println("input  position to add");
         int index =sc.nextInt();
+        while (index<0 || index>n){
+            System.out.println("input again");
+            index =sc.nextInt();
+        }
+
+
         addIndex(arr,k,index,n);
 
     }
