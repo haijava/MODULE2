@@ -12,8 +12,9 @@ public class DiscountServlet extends HttpServlet {
         String des = request.getParameter("txtproduct");
         int price = Integer.parseInt(request.getParameter("txtprice"));
         double dis = Double.parseDouble(request.getParameter("txtdiscount"));
-        double discountCacul = price * dis *0.1;
-
+        double discount = dis /100;
+        double discountCacul = price * discount ;
+        double disss =price - discountCacul;
 
         PrintWriter wr = response.getWriter();
         wr.println("<html>");
@@ -31,12 +32,12 @@ public class DiscountServlet extends HttpServlet {
         wr.println("</tr>");
         wr.println("<tr>");
         wr.println("<td>");
-        wr.println("Discount Percent: "+"<td>" +dis+"</td>"+"<br/>");
+        wr.println("Discount Percent: "+"<td>" +dis+"%"+"</td>"+"<br/>");
         wr.println("</td>");
         wr.println("</tr>");
         wr.println("<tr>");
         wr.println("<td>");
-        wr.println("Product Discount Calculator: "+"<td>" +discountCacul+"</td>"+"<br/>");
+        wr.println("Product Discount Calculator: "+"<td>" +disss+"</td>"+"<br/>");
         wr.println("</td>");
         wr.println("</tr>");
         wr.println("</table>");
