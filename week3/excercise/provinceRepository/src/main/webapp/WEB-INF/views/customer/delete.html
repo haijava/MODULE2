@@ -6,7 +6,7 @@
     <title>Manage data</title>
 </head>
 <body>
-<header th:replace="customer/layout::head"></header>
+<header th:replace="/customer/layout::head"></header>
 <th:block th:if="${message}">
     <div class="alert alert-success">
         <span th:text="${message}"></span>
@@ -16,7 +16,7 @@
 
 <h2>Delete customer</h2>
 <form th:action="@{/delete-customer}" th:object="${customer}" method="post">
-    <input th:type="hidden" name="id" th:field="*{id}">
+    <input th:type="hidden" name="id" th:field="*{id}"/>
     <div class="form-group">
         <label >First name:</label>
         <label th:text="*{firstName}"></label>
@@ -31,9 +31,6 @@
     <button class="btn btn-primary" type="submit">Delete customer</button>
 
 </form>
-
-</div>
-</div>
 <th:block th:replace="/customer/layout::footer"></th:block>
 <th:block th:replace="/customer/layout::jsfiles"></th:block>
 </body>
