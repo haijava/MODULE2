@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/product/layout::headdder">
+    <title>Hitech</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<h1>Cart Page</h1>
+<div class="container">
+    <div class="row">
+        <th:block th:each="item: ${cart}">
+            <div class="product col-sm-4">
+                <div><img width="220px" height="220px" class="img-thumbnail"
+                          th:src="@{'/images/' + ${item.product.image}}"></div>
+                <div th:text="${item.product.name}"></div>
+                <div th:text="${item.product.price}"></div>
+                <div th:text="${item.quantity}"></div>
+                <div th:text="${item.product.price * item.quantity}"></div>
+                <div><a th:href="@{/cart/remove/__${item.product.id}__}"
+                        onclick="return confirm('Are you sure?')">Remove</a></div>
+               <!-- <div class="cart_quantity">
+                    <div class="cart_quantity_button">
+                        <a class="cart_quantity_up" th:href="@{/quantity/+/__${item.itemId}__ }"> + </a>
+                        <input class="cart_quantity_input" type="text" name="quantity" autocomplete="off" size="2" th:value="${item.quantity}" readonly="readonly">
+                        <a class="cart_quantity_down" th:href="@{/quantity/-/__${item.id}__ }"> - </a>
+                    </div>
+                </div>-->
+            </div>
+        </th:block>
+    </div>
+    <a th:href="@{/}">Continue Shopping</a>
+    <div>
+        <div colspan="6">Total</div>
+        <div th:text="${total}"></div>
+    </div>
+</div>
+</body>
+
+<th:block th:replace="/product/layout::jsfile"></th:block>
+</html>
