@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+*{
+    margin: 0px;
+    padding: 0px;
+}
+html,body{
+    width: 100%
+    height:100%;
+    font-family: 'Lato', sans-serif;
+}
+
+a.navbar-brand {
+    color: white;
+}
+
+.navbar-light .navbar-brand {
+    color: rbg;
+    color: blue;
+}
+.nenanhtop h1 {
+    padding-top: 54px;
+    font-size: 68px;
+    font-weight: 900;
+    text-shadow: 2px 3px 2px black;
+    color: white;
+}
+.nenanhtop{
+    background-image: url(image/intro-bg.jpg);
+    padding-top: 241px;
+    padding-bottom: 289px;
+    border-bottom: 1px solid red;
+}
+a.btn.btn-link {
+    width: 139px;
+    height: 41px;
+    color: black;
+    /* text-shadow: 1px 0px; */
+    border-radius: 1px 10px 3px;
+    margin-left: 16px;
+    background-color: #00ccff;
+    transition: 1;
+}
+a.btn.btn-link:hover{
+    background-color: red;
+}
+
+.nenanhtop h3{
+    color: white;
+}
+.navbar {
+    margin-bottom: 0px;
+    background-color: #f8f8f8;
+    border-color: #e7e7e7; 
+}
+.navbar .navbar-nav a.nav-link {
+    color: #777;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0px 20px 0px 20px;
+}
+
+.nentrang h3 {
+    padding-top: 73px;
+    font-weight: 700;
+    font-size: 30px;
+}
+.nentrang {
+    background-color: #f8f8f8;
+    padding-bottom: 50px;
+    border: 1px solid #00000059;
+}
+.nenwhite p {
+    padding-top: 22px;
+    padding-bottom: 181px;
+    font-size: 18px;
+}
+
+hr.dai {
+    width: 55%;
+    background: #00000024;
+    border: 2px solid transparent;
+    margin-top: 48px;
+    margin-bottom: -21px;
+}
+.nentrang p {
+    font-size: 18px;
+    padding-top: 16px;
+}
+.nenwhite h3 {
+    font-weight: 700;
+    padding-top: 59px;
+    font-size: 30px;
+}
+.nenwhite{
+    padding-bottom: 60px;
+    border-bottom: 1px solid #00000045;
+}
+.nenden p {
+    font-size: 18px;
+    padding-top: 16px;
+}
+.nenden .img-fluid {
+    max-width: 100%;
+    height: auto;
+    padding-top: 54px;
+    margin-left: 0px;
+}
+.nenwhite img.img-fluid {
+    padding-top: 62px;
+}
+.nenden h3 {
+    padding-top: 64px;
+}
+.nenden {
+    background-color: #f8f8f8;
+    padding-bottom: 51px;
+}
+.nentrang img.img-fluid {
+    padding-top: 57px;
+}
+.nenbot h3 {
+    font-size: 35px;
+    font-weight: 700;
+    text-shadow: 0px 0px 1px black;
+    color: white;
+}
+.nenbot {
+    padding: 102px;
+    background-image: url(image/banner-bg.jpg);
+    background-position: center;
+}
+.menutrai a {
+    margin-left: 22px;
+    color: rebeccapurple;
+}
+
+.menutrai li {
+    list-style: none;
+    padding-top: 50px;
+}
+.footer h6 {
+    text-align: center;
+    padding-bottom: 50px;
+}
