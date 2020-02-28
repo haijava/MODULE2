@@ -2,10 +2,9 @@ package hai.exam1.model;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.persistence.*;
-import java.util.Set;
+public class ImageViewUpload {
 
-public class CategoryUpload extends  Category{
+    private CommonsMultipartFile[] fileDatas;
 
     public CommonsMultipartFile[] getFileDatas() {
         return fileDatas;
@@ -14,10 +13,5 @@ public class CategoryUpload extends  Category{
     public void setFileDatas(CommonsMultipartFile[] fileDatas) {
         this.fileDatas = fileDatas;
     }
-
-    @Transient
-    private CommonsMultipartFile[] fileDatas;
-
-
 
 }

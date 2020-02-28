@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -13,13 +14,59 @@ public class Product {
     private Long id;
     private String name;
     private Long price;
+    private Long priceSale;
     private String image;
+
+
+    public Long getPriceSale() {
+        return priceSale;
+    }
+    public void setPriceSale(Long priceSale) {
+        this.priceSale = priceSale;
+    }
+
     private  String description;
     private String status;
 
     @OneToOne(mappedBy = "product")
-    @JsonIgnore
+   /* @JsonIgnore*/
     private Item item;
+
+    public ReceiptItem getReceiptItem() {
+        return receiptItem;
+    }
+
+    public void setReceiptItem(ReceiptItem receiptItem) {
+        this.receiptItem = receiptItem;
+    }
+
+    @OneToOne(mappedBy = "product")
+    /* @JsonIgnore*/
+    private ReceiptItem receiptItem;
+
+    @OneToOne(mappedBy = "product")
+    /* @JsonIgnore*/
+    private ImageSlide imageSlide;
+
+
+    @OneToMany(mappedBy = "product")
+    Set<ImageView> imageViews;
+
+    public Set<ImageView> getImageViews() {
+        return imageViews;
+    }
+
+    public void setImageViews(Set<ImageView> imageViews) {
+        this.imageViews = imageViews;
+    }
+
+    public ImageSlide getImageSlide() {
+        return imageSlide;
+    }
+
+    public void setImageSlide(ImageSlide imageSlide) {
+        this.imageSlide = imageSlide;
+    }
 
     public Item getItem() {
         return item;
@@ -48,9 +95,9 @@ public class Product {
     @Transient
     private CommonsMultipartFile[] fileDatas;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnore
+/*    @JsonIgnore*/
     private Category category;
 
     public String getDescription() {

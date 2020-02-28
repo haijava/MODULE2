@@ -1,3 +1,4 @@
+/*
 package hai.exam1.controller;
 
 import hai.exam1.model.Product;
@@ -24,3 +25,4 @@ public class ApiController {
         return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
     }
 }
+*/

@@ -19,7 +19,13 @@
     <link rel="stylesheet" type="text/css" th:href="@{/styles/cart.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/styles/cart_responsive.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/product.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/index.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/product_responsive.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{styles/contact.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{styles/contact_responsive.css}">
+    <link rel="stylesheet" type="text/css"  th:href="@{styles/checkout.css}">
+    <link rel="stylesheet" type="text/css"  th:href="@{styles/checkout_responsive.css}">
 </head>
 <body>
 <th:block th:fragment="hedder">
@@ -48,12 +54,12 @@
                                         </li>
                                         <li><a href="#">Accessories</a></li>
                                         <li><a href="#">Offers</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="/create-contact">Contact</a></li>
                                     </ul>
                                 </nav>
                                 <div class="header_extra ml-auto">
                                     <div class="shopping_cart">
-                                        <a href="../cart/cart.ht+ml">
+                                        <a href="../cart/cart">
                                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
                                                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                  viewBox="0 0 489 489" style="enable-background:new 0 0 489 489;"
@@ -424,6 +430,10 @@
     <script th:src="@{/plugins/parallax-js-master/parallax.min.js}"></script>
     <script th:src="@{/js/custom.js}"></script>
     <script th:src="@{/js/cart.js}"></script>
+    <script th:src="@{/js/product.js}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+    <script th:src="@{/js/contact.js}"></script>
+    <script th:src="@{/jscheckout.js}"></script>
 </th:block>
 </body>
 </html>

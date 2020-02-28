@@ -14,10 +14,8 @@ package hai.exam1.controller;
 import hai.exam1.model.Cart;
 import hai.exam1.model.Item;
 import hai.exam1.model.Product;
-import hai.exam1.service.CartService;
-import hai.exam1.service.CategoryService;
-import hai.exam1.service.ItemService;
-import hai.exam1.service.ProductService;
+import hai.exam1.model.Receipt;
+import hai.exam1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +28,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("cart")
-@SessionAttributes("item")
 public class CartController {
     @Autowired
     private ProductService productService;
@@ -40,6 +37,8 @@ public class CartController {
     private ItemService itemService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ReceiptService receiptService;
 
 
     @ModelAttribute("item")
@@ -49,23 +48,41 @@ public class CartController {
     }
 
     @ModelAttribute("cart")
-    public List<Cart> getCarts() {
-        List<Cart> cart = new ArrayList<>();
-        return cart;
-    }
-
-    @ModelAttribute("cart")
     private Cart cart() {
         return new Cart();
     }
 
     @GetMapping("/cart")
-    public ModelAndView showCart() {
-        Iterable<Item> items = itemService.findAll();
-        ModelAndView modelAndView = new ModelAndView("/cart/cart");
-        modelAndView.addObject("categories", categoryService.findAll());
-        modelAndView.addObject("items", items);
-        return modelAndView;
+    public String showCart(HttpSession session, Model model) {
+
+        List<Item> cart;
+        cart = (List<Item>) session.getAttribute("cart");
+        double total = 0;
+
+        for (int i = 0; i < cart.size(); i++) {
+            total += cart.get(i).getProduct().getPrice() * cart.get(i).getQuantity();
+        }
+        model.addAttribute("cart", cart);
+        model.addAttribute("total", total);
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("items", itemService.findAll());
+        return "/cart/cart";
+    }
+    @GetMapping("/check")
+    public String showCheckout(HttpSession session, Model model) {
+
+        List<Item> cart;
+        cart = (List<Item>) session.getAttribute("cart");
+        double total = 0;
+
+        for (int i = 0; i < cart.size(); i++) {
+            total += cart.get(i).getProduct().getPrice() * cart.get(i).getQuantity();
+        }
+        model.addAttribute("cart", cart);
+        model.addAttribute("total", total);
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("items", itemService.findAll());
+        return "/product/checkout";
     }
 
     @GetMapping("/buy/{id}")
@@ -100,6 +117,8 @@ public class CartController {
         }
         model.addAttribute("cart", cart);
         model.addAttribute("total", total);
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("items", itemService.findAll());
         return "/cart/cart";
     }
 
@@ -115,16 +134,17 @@ public class CartController {
         }
         model.addAttribute("cart", cart);
         model.addAttribute("total", total);
+        model.addAttribute("categories", categoryService.findAll());
         return "/cart/cart";
     }
 
     @GetMapping("/quantity/{operator}/{id}")
-    public String quantity(@PathVariable String operator, @PathVariable Long id,HttpSession session,Model model) {
-        List<Item> itemList= (List<Item>) session.getAttribute("cart");
+    public String quantity(@PathVariable String operator, @PathVariable Long id, HttpSession session, Model model) {
+        List<Item> itemList = (List<Item>) session.getAttribute("cart");
 
         int quantity = 1;
-        double total=0;
-        for (Item item: itemList) {
+        double total = 0;
+        for (Item item : itemList) {
             if (id.equals(item.getProduct().getId())) {
                 if (operator.equals("add")) {
                     item.setQuantity(item.getQuantity() + quantity);
@@ -143,7 +163,8 @@ public class CartController {
         session.setAttribute("cart", itemList);
         model.addAttribute("cart", itemList);
 
-        model.addAttribute("total",total);
+        model.addAttribute("total", total);
+        model.addAttribute("categories", categoryService.findAll());
         return "/cart/cart";
     }
 

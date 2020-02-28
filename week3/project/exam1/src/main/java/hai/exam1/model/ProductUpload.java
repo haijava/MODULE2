@@ -6,7 +6,26 @@ public class ProductUpload {
     private Long productId;
     private String name;
     private Long price;
+    private Long priceSale;
     private String image;
+    private String imageone;
+
+    public String getImageone() {
+        return imageone;
+    }
+
+    public void setImageone(String imageone) {
+        this.imageone = imageone;
+    }
+
+    public Long getPriceSale() {
+     return priceSale;
+    }
+
+    public void setPriceSale(Long priceSale) {
+        this.priceSale = priceSale;
+    }
+
     private String description;
     private  String status;
     private CommonsMultipartFile[] fileDatas;

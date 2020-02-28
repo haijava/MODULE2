@@ -1268,10 +1268,16 @@ section
 .product_new
 {
 	background: #6c6a74;
+	color: white;
+	font-size: 23px;
+	font-weight: bold;
 }
 .product_sale
 {
 	background: #e95a5a;
+	color: white;
+	font-size: 23px;
+	font-weight: bold;
 }
 .product_hot
 {
@@ -1463,4 +1469,7 @@ section
 .footer_social ul li a i:hover
 {
 	color: #FFFFFF;
+}
+.slideaa{
+	margin-top: 450px;
 }

@@ -11,7 +11,9 @@
     height: 450px;
 }
 
-.header_content.d-flex.flex-row.align-items-center.justify-content-start {background-color: #dcffdcad;}
+.header_content.d-flex.flex-row.align-items-center.justify-content-start {
+    background-color: white;
+}
 .rowpro{
     margin-top: 170px;
 }

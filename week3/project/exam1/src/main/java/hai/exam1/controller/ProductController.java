@@ -1,9 +1,11 @@
 package hai.exam1.controller;
 
 import hai.exam1.model.Category;
+import hai.exam1.model.ImageView;
 import hai.exam1.model.Product;
 import hai.exam1.model.ProductUpload;
 import hai.exam1.service.CategoryService;
+import hai.exam1.service.ImageViewServices;
 import hai.exam1.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,8 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ImageViewServices imageViewServices;
 
     @ModelAttribute("category")
     public Iterable<Category> categories() {
@@ -46,16 +50,45 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public ModelAndView showIndex() {
-        Iterable<Product> products = productService.findAll();
+    public ModelAndView showIndex(@RequestParam("s") Optional<String> s) {
+        Iterable<Product> products;
+        if (s.isPresent()) {
+            products = productService.findAllByNameContains(s.get());
+        } else {
+            products = productService.findAll();
+        }
         ModelAndView modelAndView = new ModelAndView("/product/index");
+
         modelAndView.addObject("products", products);
+
+
         modelAndView.addObject("categories", categoryService.findAll());
         return modelAndView;
     }
+
+    @GetMapping("/price/{p}")
+    public ModelAndView showPriceIndex(@PathVariable("p") String p) {
+        ModelAndView modelAndView = new ModelAndView("/product/index");
+        switch (p) {
+            case "1":
+                modelAndView.addObject("products", productService.listProduct_3milion_6milion());
+                break;
+            case "2":
+                modelAndView.addObject("products", productService.listProduct_6milion_9milion());
+                break;
+            case "3":
+                modelAndView.addObject("products", productService.listProduct_9milion_22milion());
+            default:
+                System.out.println("a");
+        }
+        modelAndView.addObject("categories", categoryService.findAll());
+        return modelAndView;
+    }
+
     @GetMapping("/product")
     public ModelAndView cartIndex() {
         Iterable<Product> products = productService.findAll();
+
         ModelAndView modelAndView = new ModelAndView("/login/index");
         modelAndView.addObject("products", products);
         modelAndView.addObject("categories", categoryService.findAll());
@@ -63,7 +96,7 @@ public class ProductController {
     }
 
     @GetMapping("/admin")
-    public ModelAndView showadmin() {
+    public ModelAndView showAdmin() {
         Iterable<Product> products = productService.findAll();
         ModelAndView modelAndView = new ModelAndView("/admin/admin");
         modelAndView.addObject("products", products);
@@ -71,29 +104,31 @@ public class ProductController {
     }
 
     @GetMapping("/categories/{categoryId}")
-    public ModelAndView showlistProduct(@PathVariable("categoryId") Long categoryId) {
+    public ModelAndView showListProduct(@PathVariable("categoryId") Long categoryId) {
         Iterable<Product> products = productService.findByCategory(categoryService.findId(categoryId));
         ModelAndView modelAndView = new ModelAndView("/product/categories");
         modelAndView.addObject("products", products);
         modelAndView.addObject("categories", categoryService.findAll());
+        modelAndView.addObject("id", categoryId);
         return modelAndView;
 
     }
 
-    @GetMapping("create-product")
+    @GetMapping("/create-product")
     public ModelAndView showFormProduct(@ModelAttribute("product") ProductUpload product) {
         ModelAndView modelAndView = new ModelAndView("/admin/create");
         modelAndView.addObject("product", new ProductUpload());
-        //modelAndView.addObject("productUpload", product);
+        modelAndView.addObject("productUpload", product);
         return modelAndView;
     }
 
-    @PostMapping("create-product")
+    @PostMapping("/create-product")
     public ModelAndView create(HttpServletRequest request, @ModelAttribute("product") ProductUpload product) {
         Product productPersist = new Product();
         productPersist.setName(product.getName());
         productPersist.setImage(product.getImage());
         productPersist.setPrice(product.getPrice());
+        productPersist.setPriceSale(product.getPriceSale());
         productPersist.setDescription(product.getDescription());
         productPersist.setStatus(product.getStatus());
         productPersist.setCategory(product.getCategory());
@@ -150,12 +185,13 @@ public class ProductController {
     }
 
     @PostMapping("/edit")
-    public ModelAndView edit(@ModelAttribute("product") Product product,ProductUpload productUpload) {
+    public ModelAndView edit(@ModelAttribute("product") Product product, ProductUpload productUpload) {
         product.setName(productUpload.getName());
         product.setImage(productUpload.getImage());
         product.setStatus(productUpload.getStatus());
         product.setDescription(productUpload.getDescription());
         product.setPrice(productUpload.getPrice());
+        product.setPriceSale(productUpload.getPriceSale());
         product.setCategory(productUpload.getCategory());
         productService.save(product);
         ModelAndView modelAndView = new ModelAndView("/admin/edit");
@@ -177,6 +213,57 @@ public class ProductController {
         productService.delete(product.getId());
 
         return "redirect:/admin";
+    }
+
+    @GetMapping("/viewp/{id}/{price}")
+    public ModelAndView viewpro(@PathVariable("id") Long id, @PathVariable("price") Long price) {
+        Product product = productService.findId(id);
+        Iterable<Product> products = productService.listProduct_price(price, price);
+        ModelAndView modelAndView = new ModelAndView("/product/viewProduct");
+        modelAndView.addObject("products", products);
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("categories", categoryService.findAll());
+        Iterable<ImageView> imageViews = imageViewServices.findAllByProduct(product);
+        modelAndView.addObject("imageViews", imageViews);
+        /* modelAndView.addObject("id",id);*/
+        return modelAndView;
+    }
+
+    @GetMapping("/price/{price}/{id}")
+    public ModelAndView showPrice(@PathVariable("id") Long id, @PathVariable("price") String price) {
+        ModelAndView modelAndView = new ModelAndView("/product/categories");
+        switch (price) {
+            case "price_3milion_6milion":
+                modelAndView.addObject("products", productService.listProduct_price_3milion_6milion(id));
+                break;
+            case "price_6milion_9milion":
+                modelAndView.addObject("products", productService.listProduct_price_6milion_9milion(id));
+                break;
+            case "price_9milion_22milion":
+                modelAndView.addObject("products", productService.listProduct_price_9milion_22milion(id));
+                break;
+            default:
+                System.out.println("again");
+        }
+
+        modelAndView.addObject("categories", categoryService.findAll());
+        return modelAndView;
+    }
+
+    @GetMapping("/name")
+    public ModelAndView search(@RequestParam("s") Optional<String> s, @RequestParam("id") Long id) {
+        Iterable<Product> products;
+        ModelAndView modelAndView = new ModelAndView("/product/categories");
+        if (s.isPresent()) {
+            products = productService.findAllByNameContains(s.get());
+            modelAndView.addObject("products", productService.listProduct_name(id, "%" + s.get() + "%"));
+        } else {
+            products = productService.findAll();
+        }
+        modelAndView.addObject("products", products);
+        modelAndView.addObject("categories", categoryService.findAll());
+        modelAndView.addObject("id", id);
+        return modelAndView;
     }
 
 }

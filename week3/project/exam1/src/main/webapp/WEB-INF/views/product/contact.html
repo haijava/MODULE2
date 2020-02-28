@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
-<title>Contact</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Sublime project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="styles/contact.css">
-<link rel="stylesheet" type="text/css" href="styles/contact_responsive.css">
+<head th:replace="/product/layout::headdder">
+	<meta charset="UTF-8">
+	<title>Product</title>
 </head>
 <body>
 
@@ -23,37 +16,31 @@
 				<div class="row">
 					<div class="col">
 						<div class="header_content d-flex flex-row align-items-center justify-content-start">
-							<div class="logo"><a href="#">Sublime.</a></div>
-							<nav class="main_nav">
-								<ul>
+							<div class="logo"><a class="navbar-brand" href="#">
+								<img src="/images/logo.jpeg" alt="Logo" style="width:100px;height: 100px" class="img-thumbnail">
+							</a></div>
+							<nav class=" main_nav menu1 navbar navbar-expand-lg navbar-primary|secondary|success|danger|warning|info|light|dark bg-primary|secondary|success|danger|warning|info|light|dark">
+
+							<ul>
 									<li class="hassubs active">
-										<a href="index.html">Home</a>
-										<ul>
-											<li><a href="categories.html">Categories</a></li>
-											<li><a href="product.html">Product</a></li>
-											<li><a href="../cart/cart1.html">Cart</a></li>
-											<li><a href="checkout.html">Check out</a></li>
-											<li><a href="contact.html">Contact</a></li>
-										</ul>
+										<a href="/">Home</a>
 									</li>
 									<li class="hassubs">
-										<a href="categories.html">Categories</a>
+										<a href="javascript:void(0)">Categories</a>
 										<ul>
-											<li><a href="categories.html">Category</a></li>
-											<li><a href="categories.html">Category</a></li>
-											<li><a href="categories.html">Category</a></li>
-											<li><a href="categories.html">Category</a></li>
-											<li><a href="categories.html">Category</a></li>
+											<th:block th:each="category1:${categories}">
+												<li><a th:href="@{/categories/__${category1.getCategoryId()}__ }"
+													   th:text="${category1.name}"></a></li>
+											</th:block>
 										</ul>
 									</li>
 									<li><a href="#">Accessories</a></li>
-									<li><a href="#">Offers</a></li>
-									<li><a href="contact.html">Contact</a></li>
+									<li><a href="/create-contact">Contact</a></li>
 								</ul>
 							</nav>
 							<div class="header_extra ml-auto">
 								<div class="shopping_cart">
-									<a href="../cart/cart1.html">
+									<a href="/cart/cart">
 										<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 												 viewBox="0 0 489 489" style="enable-background:new 0 0 489 489;" xml:space="preserve">
 											<g>
@@ -141,7 +128,7 @@
 							<li class="page_menu_item menu_mm"><a href="product.html">Product<i class="fa fa-angle-down"></i></a></li>
 							<li class="page_menu_item menu_mm"><a href="../cart/cart1.html">Cart<i class="fa fa-angle-down"></i></a></li>
 							<li class="page_menu_item menu_mm"><a href="checkout.html">Checkout<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="contact.html">Contact<i class="fa fa-angle-down"></i></a></li>
+							<li class="page_menu_item menu_mm"><a href="/create-contact">Contact<i class="fa fa-angle-down"></i></a></li>
 						</ul>
 					</li>
 					<li class="page_menu_item has-children menu_mm">
@@ -155,7 +142,7 @@
 					</li>
 					<li class="page_menu_item menu_mm"><a href="index.html">Accessories<i class="fa fa-angle-down"></i></a></li>
 					<li class="page_menu_item menu_mm"><a href="#">Offers<i class="fa fa-angle-down"></i></a></li>
-					<li class="page_menu_item menu_mm"><a href="contact.html">Contact<i class="fa fa-angle-down"></i></a></li>
+					<li class="page_menu_item menu_mm"><a href="/create-contact">Contact<i class="fa fa-angle-down"></i></a></li>
 				</ul>
 			</div>
 		</div>
@@ -208,27 +195,27 @@
 						<div class="section_title">Get in Touch</div>
 						<div class="section_subtitle">Say hello</div>
 						<div class="contact_form_container">
-							<form action="#" id="contact_form" class="contact_form">
+							<form th:action="@{/create-contact}" id="contact_form" class="contact_form" th:object="${contact}" method="post">
 								<div class="row">
 									<div class="col-xl-6">
 										<!-- Name -->
 										<label for="contact_name">First Name*</label>
-										<input type="text" id="contact_name" class="contact_input" required="required">
+										<input type="text" id="contact_name" class="contact_input" required="required" th:field="*{firstName}">
 									</div>
 									<div class="col-xl-6 last_name_col">
 										<!-- Last Name -->
 										<label for="contact_last_name">Last Name*</label>
-										<input type="text" id="contact_last_name" class="contact_input" required="required">
+										<input type="text" id="contact_last_name" class="contact_input" required="required" th:field="*{lastName}">
 									</div>
 								</div>
 								<div>
 									<!-- Subject -->
 									<label for="contact_company">Subject</label>
-									<input type="text" id="contact_company" class="contact_input">
+									<input type="text" id="contact_company" class="contact_input" th:field="*{subject}">
 								</div>
 								<div>
 									<label for="contact_textarea">Message*</label>
-									<textarea id="contact_textarea" class="contact_input contact_textarea" required="required"></textarea>
+									<textarea id="contact_textarea" class="contact_input contact_textarea" required="required" th:field="*{messeage}"></textarea>
 								</div>
 								<button class="button contact_button"><span>Send Message</span></button>
 							</form>
@@ -237,42 +224,55 @@
 				</div>
 
 				<!-- Contact Info -->
+				<!--<div class="col-lg-3 offset-xl-1 contact_col">
+					<div class="contact_info">
+						<div class="contact_info_section" >
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<tr>
+										<th>Name</th>
+										<th>Email</th>
+										<th>Phone</th>
+
+									</tr>
+									<th:block th:each="sta : ${staffs}">
+										<tr>
+											<td th:text="${sta.getName()}"></td>
+											<td th:text="${sta.getEmail()}"></td>
+											<td th:text="${sta.getPhone()}"></td>
+
+										</tr>
+									</th:block>
+								</table>
+							</div>
+
+						</div>
+
+					</div>
+				</div>-->
 				<div class="col-lg-3 offset-xl-1 contact_col">
 					<div class="contact_info">
-						<div class="contact_info_section">
-							<div class="contact_info_title">Marketing</div>
-							<ul>
-								<li>Phone: <span>+53 345 7953 3245</span></li>
-								<li>Email: <span>yourmail@gmail.com</span></li>
-							</ul>
-						</div>
-						<div class="contact_info_section">
-							<div class="contact_info_title">Shippiing & Returns</div>
-							<ul>
-								<li>Phone: <span>+53 345 7953 3245</span></li>
-								<li>Email: <span>yourmail@gmail.com</span></li>
-							</ul>
-						</div>
-						<div class="contact_info_section">
-							<div class="contact_info_title">Information</div>
-							<ul>
-								<li>Phone: <span>+53 345 7953 3245</span></li>
-								<li>Email: <span>yourmail@gmail.com</span></li>
-							</ul>
-						</div>
+						<th:block th:each="sta:${staffs}">
+							<div class="contact_info_section">
+								<div class="contact_info_title">Marketing</div>
+								<ul>
+									<li>Name: <span th:text="${sta.name}"></span></li>
+									<li>Phone: <span th:text="${sta.phone}"></span></li>
+									<li>Email: <span th:text="${sta.email}"></span></li>
+								</ul>
+							</div>
+						</th:block>
+
 					</div>
 				</div>
+			</div>
 			</div>
 			<div class="row map_row">
 				<div class="col">
 
 					<!-- Google Map -->
-					<div class="map">
-						<div id="google_map" class="google_map">
-							<div class="map_container">
-								<div id="map"></div>
-							</div>
-						</div>
+					<div class="top7 bando">
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d122445.89064313394!2d107.50707216815664!3d16.453543460291904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3141a115e1a7935f%3A0xbf3b50af70b5c7b7!2zVHAuIEh14bq_LCBUaOG7q2EgVGhpw6puIEh14bq_LCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1563177740045!5m2!1svi!2s" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
 					</div>
 
 				</div>
@@ -284,7 +284,6 @@
 	
 	<div class="footer_overlay"></div>
 	<th:block th:replace="/product/layout::footer"></th:block>
-
 </div>
 <th:block th:replace="/product/layout::jsfile"></th:block>
 </body>

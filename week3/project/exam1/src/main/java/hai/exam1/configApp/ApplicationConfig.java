@@ -73,7 +73,26 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public ItemService itemService(){
         return new ItemServiceImpl();
     }
-
+    @Bean
+    public ImageViewServices imageViewServices(){
+        return new ImageViewServiceImpl();
+    }
+    @Bean
+    public ContactService contactService(){
+        return new ContactServiceImpl();
+    }
+    @Bean
+    public StaffService staffService(){
+        return new StaffServiceImpl();
+    }
+    @Bean
+    public CustomerService customerService(){
+        return new CustomerServiceImpl();
+    }
+    @Bean
+    public ReceiptService receiptService(){
+        return new ReceiptServiceImpl();
+    }
 
     //Thymeleaf Configuration
     @Bean

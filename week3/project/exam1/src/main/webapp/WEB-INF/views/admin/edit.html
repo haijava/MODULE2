@@ -18,6 +18,10 @@
             <input type="text" class="form-control" th:field="*{price}"/>
         </div>
         <div class="form-group">
+            <label>Price Sale:</label>
+            <input type="text" class="form-control" th:field="*{priceSale}"/>
+        </div>
+        <div class="form-group">
             <label>Description:</label>
             <input type="text" class="form-control" th:field="*{description}"/>
         </div>
@@ -29,6 +33,11 @@
             <label>Image</label>
             <input type="text" th:field="*{image}" class="form-control" hidden="hidden">
             <input class="form-control form-control-lg fileDatas" type="file" name="fileDatas" id="fileDatas"  onchange="setImage();" />
+        </div>
+        <div class="form-group">
+            <label>Imageone</label>
+            <input type="text" th:field="*{imageone}" class="form-control" hidden="hidden">
+            <input class="form-control form-control-lg fileDatas" type="file" name="fileDatas" id="fileDatasone"  onchange="setImage();" />
         </div>
 
         <div class="form-group">

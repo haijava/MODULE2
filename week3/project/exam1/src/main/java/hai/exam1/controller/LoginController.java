@@ -1,7 +1,9 @@
 package hai.exam1.controller;
 
 import hai.exam1.model.Login;
+import hai.exam1.model.Product;
 import hai.exam1.service.LoginService;
+import hai.exam1.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,15 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private ProductService productService;
+
+    @GetMapping("/log")
+    public ModelAndView showLogin() {
+        ModelAndView modelAndView = new ModelAndView("/login/login");
+        modelAndView.addObject("logins", new Login());
+        return modelAndView;
+    }
 
     @GetMapping("/login")
     public ModelAndView show() {
@@ -28,7 +39,9 @@ public class LoginController {
     public ModelAndView login(@ModelAttribute("logins") Login login) {
         Login login1 = loginService.findByEmailPass(login.getEmail(), login.getPassword());
         if (login1 != null) {
+           Iterable<Product> products= productService.findAll();
             ModelAndView modelAndView = new ModelAndView("/product/index");
+            modelAndView.addObject("products",products);
             return modelAndView;
         } else {
             ModelAndView modelAndView = new ModelAndView("/login/login");
